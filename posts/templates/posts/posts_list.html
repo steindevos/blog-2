@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% load static from staticfiles %} {% block content %}
+<div class="row center-align">
+    <div class="col-sm-6">
+        <form class="input-group" action="/search">
+            <input name="q" type="text" class="form-control" placeholder="Search for blogs">
+            <span class="input-group-btn"><button class="btn btn-default" type="submit" name="action">Go!</button></span>
+        </form>
+    </div>
+
+    <div class="col-sm-6 btn-group" role="group">
+        <a href="{% url 'show_views' %}" type="button" class="btn btn-default">Views</a>
+        <a href="{% url 'show_likes' %}" type="button" class="btn btn-default">Likes</a>
+    </div>
+</div>
+
+{% for post in posts %}
+<div class="row">
+    <div class="col-md-2 col-sm-3 text-center">
+        <a class="story-img" href="#">
+                    <img src="{{ MEDIA_URL}}{{post.author.profile.image}}" class="img-circle">
+                </a>
+        <p><span class="boldtext">Author:</span> {{ post.author.username }}</p>
+    </div>
+    <div class="col-md-10 col-sm-9">
+        <h3>{{ post.title }}</h3>
+        <div class="row">
+            <div class="col-xs-9">
+                <p>{{ post.content|truncatewords:30 }}</p>
+                <p><a href="{% url 'post_detail' post.id %}" class="btn btn-default">Read more</a></p>
+                <p><span class="boldtext">Published on:</span> {{ post.published_date }} </p>
+                <p><span class="boldtext">Views:</span> {{post.views}}</p>
+                <p><span class="boldtext">Tag:</span> {{ post.tag }}</p>
+                <p><span class="boldtext">Likes:</span> {{ post.liked_by.all | length }}</p>
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>
+{% endfor %} {% endblock %}
