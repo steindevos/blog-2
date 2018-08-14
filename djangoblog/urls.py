@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from posts.views import posts_list, post_detail, add_post, edit_post, search_posts, show_views, show_likes
+from posts.views import posts_list, post_detail, add_post, edit_post, search_posts, show_views, show_likes, like, unlike
 from accounts.views import register
 from django.views.static import serve
 from django.conf import settings
@@ -42,4 +42,6 @@ urlpatterns = [
     path('post/<int:id>/edit',  edit_post, name="edit_post"),
     path('post/add', add_post, name='add_post'),
     path('media/<path:path>', serve, {'document_root': settings.MEDIA_ROOT}),
+    path('post/<int:id>/like', like, name="like"),
+    path('post/<int:id>/unlike', unlike, name="unlike"),
 ]
